@@ -16,22 +16,18 @@ public class AlumnoDAOImp implements AlumnoDAO {
 
     @Override
     public void agregar(Alumno alumno) {
-        try {
-            //Definir la sentencia sql para insertar una nueva carrera
+        try {            
             String sql = "INSERT INTO alumnos(nombre, apellido,nota) values(?, ?, ?)";
-
-            //Crearmos una instancia de la clase ConexionBD para establecer la conexion a la software de gestión
+            
             ConexionBD con = new ConexionBD();
             Connection conexion = con.establecerConeccion();
-
-            //Preparar la sentencia sql para su ejecución
+            
             PreparedStatement consulta = conexion.prepareStatement(sql);
 
             consulta.setString(1, alumno.getNombre());
             consulta.setString(2, alumno.getApellido());
             consulta.setDouble(3, alumno.getNota());
-
-            //Ejecutar la sentencia sql y obtener el número de filas afectadas
+            
             int filasAfectadas = consulta.executeUpdate();
 
             if (filasAfectadas > 0) {
@@ -39,10 +35,8 @@ public class AlumnoDAOImp implements AlumnoDAO {
             } else {
                 JOptionPane.showMessageDialog(null, "No se agregó alumno", "Advertencia", JOptionPane.WARNING_MESSAGE);
             }
-
-            //Cerrar la declaración preparada
-            consulta.close();
-            //cerrar conexion
+            
+            consulta.close();            
             conexion.close();
 
         } catch (SQLException e) {
@@ -67,20 +61,16 @@ public class AlumnoDAOImp implements AlumnoDAO {
             consulta.setDouble(3, alumno.getNota());
 
             consulta.setInt(4, idSeleccionado);
-
-            //Ejecutamos la actualizacion
+            
             int filasAfectadas = consulta.executeUpdate();
 
-            if (filasAfectadas > 0) {
-                //La actualización fue exitosa
+            if (filasAfectadas > 0) {                
                 JOptionPane.showMessageDialog(null, "Se modificó alumno con éxito", "Información", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(null, "No se modificó alumno", "Advertencia",  JOptionPane.WARNING_MESSAGE);
             }
-
-            //Cerrar la declaración preparada
-            consulta.close();
-            //Cerrar la conexión
+            
+            consulta.close();            
             conexion.close();
 
         } catch (SQLException e) {
@@ -119,22 +109,15 @@ public class AlumnoDAOImp implements AlumnoDAO {
         //Creamos un modelo para almacenar los registros dentro de la tabla
         DefaultTableModel model = new DefaultTableModel();
         
-        try {
-            //Definir la sentencia SQL para seleccionar todos los registros de la tabla carreras
-            String sql = "SELECT * FROM alumnos";
-
-            //Creamos una instancia de la clase main para establacer la conexion a la base de datos
+        try {            
+            String sql = "SELECT * FROM alumnos";           
             ConexionBD con = new ConexionBD();
-
-            //Establecemos la conexion a la base de datos
-            Connection conexion = con.establecerConeccion();
-                      
-            //Creamos una declaración para ejecutar la consulta sql
+            
+            Connection conexion = con.establecerConeccion();                                  
             Statement st = conexion.createStatement();
 
             ResultSet rs = st.executeQuery(sql);
-
-            //Obtenemos la información de las columnas de la consulta
+            
             ResultSetMetaData metaData = rs.getMetaData();
 
             int numColumnas = metaData.getColumnCount();
@@ -153,8 +136,7 @@ public class AlumnoDAOImp implements AlumnoDAO {
             }
                         
             st.close();
-            rs.close();
-            //cerrar conexion
+            rs.close();            
             conexion.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(),"Se ha producido un error", JOptionPane.ERROR_MESSAGE);
@@ -166,17 +148,11 @@ public class AlumnoDAOImp implements AlumnoDAO {
     public int totalAlumnos() {
         int totalRegistros=0;
         try {            
-            String sql = "SELECT COUNT(*) FROM alumnos";
-
-            //Creamos una instancia de la clase main para establacer la conexion a la base de datos
-            ConexionBD con = new ConexionBD();
-
-            //Establecemos la conexion a la base de datos
+            String sql = "SELECT COUNT(*) FROM alumnos";           
+            ConexionBD con = new ConexionBD();           
             Connection conexion = con.establecerConeccion();
-                      
-            //Creamos una declaración para ejecutar la consulta sql
+                                  
             Statement st = conexion.createStatement();
-
             ResultSet rs = st.executeQuery(sql);
 
             if (rs.next()) {
@@ -184,8 +160,7 @@ public class AlumnoDAOImp implements AlumnoDAO {
             }
                         
             st.close();
-            rs.close();
-            //cerrar conexion
+            rs.close();            
             conexion.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(),"Se ha producido un error", JOptionPane.ERROR_MESSAGE);
@@ -200,10 +175,8 @@ public class AlumnoDAOImp implements AlumnoDAO {
             String sql = "SELECT AVG(nota) FROM alumnos";           
             ConexionBD con = new ConexionBD();           
             Connection conexion = con.establecerConeccion();
-                      
-            //Creamos una declaración para ejecutar la consulta sql
+            
             Statement st = conexion.createStatement();
-
             ResultSet rs = st.executeQuery(sql);
 
             if (rs.next()) {
@@ -211,8 +184,7 @@ public class AlumnoDAOImp implements AlumnoDAO {
             }
                         
             st.close();
-            rs.close();
-            //cerrar conexion
+            rs.close();            
             conexion.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(),"Se ha producido un error", JOptionPane.ERROR_MESSAGE);
